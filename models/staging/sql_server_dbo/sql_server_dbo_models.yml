@@ -1,11 +1,7 @@
 version: 2
 
 models:
-  - name: alumno14
-    description: "Practice and staging schema for the alumno14 Silver layer."
-    database: alumno14_dev_silver_db
 
-    tables:
       - name: stg_sql_server_dbo__country
         description: "Country reference table staged from SQL Server."
         columns:
@@ -265,7 +261,6 @@ models:
             description: "Promotion status code."
             tests:
               - accepted_values:
-                  # Adjust to your real statuses
                   values: ['ACTIVE', 'INACTIVE']
           - name: date_deleted
             data_type: boolean

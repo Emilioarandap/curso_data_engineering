@@ -14,7 +14,7 @@ products_change AS (
         product_id,                            
         CAST(price AS DECIMAL(12,2))         AS product_price,
         name                                  AS product_name,
-        cast(inventory AS INT)                AS inventory,          
+        case when cast(inventory as int) > 0 then 1 else 0 end as is_in_stock,       
         _fivetran_deleted                     AS date_deleted,
         convert_timezone ('UTC', _fivetran_synced)    AS date_load
 

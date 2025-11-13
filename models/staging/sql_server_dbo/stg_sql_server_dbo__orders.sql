@@ -19,7 +19,10 @@ WITH src_orders AS (
 orders_change AS (
     SELECT
     order_id            as order_id,
-    {{ dbt_utils.generate_surrogate_key(['shipping_service']) }} AS shipping_service_id, 
+   -- 1) normalizamos SIEMPRE igual
+        coalesce(lower(trim(shipping_service)), 'unknown') AS shipping_service_code,
+    -- 2) generamos la SK sobre el valor normalizado
+        {{ dbt_utils.generate_surrogate_key(["coalesce(lower(trim(shipping_service)), 'unknown')"]) }} AS shipping_service_id,
     shipping_cost,
     address_id,
     convert_timezone ('UTC', created_at)        as created_at,

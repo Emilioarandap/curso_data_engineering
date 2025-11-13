@@ -5,16 +5,15 @@
 }}
 
 WITH src_state AS (
-    SELECT * 
-    FROM {{ source('sql_server_dbo', 'addresses') }} 
-    ),
+    select distinct trim(state) as state
+    from {{ ref('stg_sql_server_dbo__addresses') }}
+),,
 
 state_table AS (
     SELECT
        {{ dbt_utils.generate_surrogate_key(['state']) }}     AS state_id,
-        state_id          AS desc_state,  
-        country,    
-        convert_timezone ('UTC', _fivetran_synced)    AS date_load                                        
+        state         AS desc_state,  
+        country,                                           
     FROM src_state 
     )
 

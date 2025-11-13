@@ -14,7 +14,7 @@ order_items_change AS (
     {{ dbt_utils.generate_surrogate_key(['order_id', 'product_id']) }}    as order_items_id,
     order_id,
     product_id,
-    quantity, 
+    cast(quantity as int)            as quantity, 
     convert_timezone ('UTC', _fivetran_synced)  AS date_load
     FROM src_orders_items
     )
